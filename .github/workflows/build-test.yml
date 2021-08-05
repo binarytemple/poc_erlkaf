@@ -1,0 +1,77 @@
+name: Test Build and Deploy
+on:
+  push:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      MIX_ENV: test
+      CREATE_TOPICS: test,uof-fixtures,uof-odds
+      KAFKA_HOSTS: localhost:9092
+      KAFKA_CONSUMER_GROUP: bet_eps_test
+      CONCURRENCY: 10
+      TRANSACTION_CALL_TIMEOUT: 10000
+      TRANSACTION_POOL_TIMEOUT: 15000
+      STORAGE_ADAPTER: noop
+    strategy:
+      matrix:
+        otp: ["23.3.4.5", "24.0.5"]
+        elixir: ["1.12.2"]
+    services:
+      redpanda:
+        image: ghcr.io/bet01/redpanda_ci_image:main
+        ports:
+          - 9092:9092
+          - 9644:9644
+        env:
+          CREATE_TOPICS: ${{ env.CREATE_TOPICS }}
+    steps:
+      # - uses: nev7n/wait_for_response@v1
+      #   with:
+      #     url: "http://localhost:9644/metrics"
+      #     responseCode: 200
+      #     timeout: 30000
+      #     interval: 500
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{matrix.otp}}
+          elixir-version: ${{matrix.elixir}}
+      - uses: actions/checkout@v2
+      - name: Cache deps and hex
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.hex
+            ~/.mix
+            _build
+            deps
+          key: elixir-deps-cache-v3-${{ runner.os }}-${{ hashFiles('**/mix.lock') }}
+      - name: Dependencies
+        shell: bash
+        env:
+          DEPLOY_KEY: ${{ secrets.ESL_DEPLOY_KEY }}
+          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+        run: |
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "${DEPLOY_KEY}"
+          mix local.hex --force
+          mix local.rebar --force
+          mix do deps.get, deps.compile
+      - name: Compile
+        run: |
+          mix compile --warnings-as-errors
+      - name: Test
+        run: |
+          mix test --trace --exclude integration
+      # - name: Integration tests
+      #   run: |
+      #     mix test --trace --only integration
+      #- name: Credo
+      #  run: |
+      #    mix credo
+      #- name: Check formatting
+      #  run: |
+      #    mix format --check-formatted
+      #- name: Dialyzer
+      #  run: |
+      #    env MIX_ENV=dev mix dialyzer

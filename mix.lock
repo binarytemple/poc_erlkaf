@@ -1,0 +1,11 @@
+%{
+  "datum": {:hex, :datum, "4.5.1", "66c163a7ffb7a773e884eb238402375d2e6609718c5c88aef5809e410d494f08", [:rebar3], [], "hexpm", "20dcf2084b00143b8d9eec45eef4c8d436e77fdc8b23208ca7bb82b3bd6a4da4"},
+  "dep_from_git": {:git, "https://github.com/silviucpp/erlkaf.git", "6ae0d2e5b44f95dcb1fb98b8c29d942699c4bbf9", [tag: "v2.0.5"]},
+  "erlkaf": {:hex, :erlkaf, "2.0.5", "ac3fe547fc4ce0e3308b8409248818f3b2c5a3cb0c01805ed60abcf2e82b7202", [:rebar3], [{:esq, "2.0.4", [hex: :esq, repo: "hexpm", optional: false]}, {:jsone, "1.5.2", [hex: :jsone, repo: "hexpm", optional: false]}, {:lager, "3.9.2", [hex: :lager, repo: "hexpm", optional: false]}], "hexpm", "cabfa186794a1e68a353c0a4d1260433df08dd5703b4667e86b628f565d4a50e"},
+  "esq": {:hex, :esq, "2.0.4", "f99165f53fa802e195b47119dfcd4ce5d1343f8220c1e55031004f5de64b4017", [:rebar3], [{:datum, "~>4.5.0", [hex: :datum, repo: "hexpm", optional: false]}, {:pipe, "~>2.0.0", [hex: :pipes, repo: "hexpm", optional: false]}, {:uid, "~>1.3.3", [hex: :uid, repo: "hexpm", optional: false]}], "hexpm", "e24606a09ee6bf57fd67a3372254cc0d4bc1aae0c3c178ba78a9d76f091b846d"},
+  "goldrush": {:hex, :goldrush, "0.1.9", "f06e5d5f1277da5c413e84d5a2924174182fb108dabb39d5ec548b27424cd106", [:rebar3], [], "hexpm", "99cb4128cffcb3227581e5d4d803d5413fa643f4eb96523f77d9e6937d994ceb"},
+  "jsone": {:hex, :jsone, "1.5.2", "87adea283c9cf24767b4deed44602989a5331156df5d60a2660e9c9114d54046", [:rebar3], [], "hexpm", "170c171ce7f6dd70c858065154a3305b8564833c6dcca17e10b676ca31ea976f"},
+  "lager": {:hex, :lager, "3.9.2", "4cab289120eb24964e3886bd22323cb5fefe4510c076992a23ad18cf85413d8c", [:rebar3], [{:goldrush, "0.1.9", [hex: :goldrush, repo: "hexpm", optional: false]}], "hexpm", "7f904d9e87a8cb7e66156ed31768d1c8e26eba1d54f4bc85b1aa4ac1f6340c28"},
+  "pipe": {:hex, :pipes, "2.0.1", "a2b56796c63690ed0e78bb77bb389af250bd70afa15a6869369dbdc11087d68f", [:rebar3], [], "hexpm", "623357a158e4c33ee589d4c735ddbab9c77a04e85159192e4d42f1dc97c60bd9"},
+  "uid": {:hex, :uid, "1.3.4", "42e30e22908e8e2faa6227e9c261f1954cb540be3c5a139e112369ae6cc451fc", [:rebar3], [], "hexpm", "f8388ef93b16a5d5f9977e1fe814ae0acf5529b1e0ee5d7b18d23cb4c0f87eaa"},
+}
